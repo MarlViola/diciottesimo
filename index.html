@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Auguri Raffaele — 18 anni</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0a0a0a;
+      --surface:  #111111;
+      --border:   #1e1e1e;
+      --xbox:     #107c10;
+      --xbox-hi:  #52b043;
+      --xbox-glow:#52b04360;
+      --white:    #f0f0f0;
+      --muted:    #666;
+      --yellow:   #ffd700;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--white);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── CANVAS ── */
+    #confetti-canvas {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── SCANLINES overlay ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.07) 2px,
+        rgba(0,0,0,0.07) 4px
+      );
+      pointer-events: none;
+      z-index: 998;
+    }
+
+    .content { position: relative; z-index: 1; }
+
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 100vh;
+      padding: 2rem;
+      gap: 2rem;
+    }
+
+    /* ── XBOX LOGO (CSS puro) ── */
+    .xbox-logo {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--xbox);
+      box-shadow: 0 0 30px var(--xbox-glow), 0 0 60px rgba(16,124,16,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: logoPulse 3s ease-in-out infinite;
+    }
+    .xbox-logo::before {
+      content: '';
+      position: absolute;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.15);
+    }
+    /* X in CSS */
+    .xbox-x {
+      width: 28px; height: 28px;
+      position: relative;
+    }
+    .xbox-x::before,
+    .xbox-x::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 0;
+      width: 100%; height: 4px;
+      background: white;
+      border-radius: 2px;
+      transform-origin: center;
+    }
+    .xbox-x::before { transform: translateY(-50%) rotate(45deg); }
+    .xbox-x::after  { transform: translateY(-50%) rotate(-45deg); }
+
+    @keyframes logoPulse {
+      0%,100% { box-shadow: 0 0 30px var(--xbox-glow), 0 0 60px rgba(16,124,16,0.3); }
+      50%      { box-shadow: 0 0 50px rgba(82,176,67,0.8), 0 0 100px rgba(16,124,16,0.5); }
+    }
+
+    /* ── ACHIEVEMENT CARD ── */
+    .achievement {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      max-width: 420px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      animation: slideIn 0.6s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .achievement::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--xbox-hi);
+      box-shadow: 0 0 12px var(--xbox-glow);
+    }
+    .achievement::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(82,176,67,0.06) 0%, transparent 60%);
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    /* Medaglia achievement (CSS) */
+    .ach-icon {
+      flex-shrink: 0;
+      width: 52px; height: 52px;
+      background: #1a1a1a;
+      border: 2px solid var(--xbox);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    /* stella CSS */
+    .ach-star {
+      width: 26px; height: 26px;
+      background: var(--yellow);
+      clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+      box-shadow: 0 0 12px rgba(255,215,0,0.7);
+      animation: starPulse 2s ease-in-out infinite;
+    }
+    @keyframes starPulse {
+      0%,100% { box-shadow: 0 0 12px rgba(255,215,0,0.7); transform: scale(1); }
+      50%      { box-shadow: 0 0 24px rgba(255,215,0,1);   transform: scale(1.1); }
+    }
+
+    .ach-text { flex: 1; text-align: left; position: relative; z-index: 1; }
+    .ach-top {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--xbox-hi);
+      margin-bottom: 0.15rem;
+    }
+    .ach-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .ach-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+    .ach-pts {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem;
+      color: var(--yellow);
+      font-weight: 900;
+      position: relative; z-index: 1;
+    }
+
+    /* ── BIG 18 ── */
+    .big-number {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(6rem, 22vw, 12rem);
+      font-weight: 900;
+      line-height: 1;
+      color: var(--white);
+      position: relative;
+      letter-spacing: -0.02em;
+    }
+    .big-number::before {
+      content: '18';
+      position: absolute;
+      inset: 0;
+      color: var(--xbox-hi);
+      filter: blur(18px);
+      opacity: 0.4;
+      z-index: -1;
+    }
+    .big-number span {
+      display: inline-block;
+      animation: numberFloat 4s ease-in-out infinite;
+    }
+    @keyframes numberFloat {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.05em;
+    }
+    .hero-name { color: var(--xbox-hi); }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 380px;
+      letter-spacing: 0.03em;
+    }
+
+    .its-today {
+      display: none;
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      color: var(--xbox-hi);
+      text-shadow: 0 0 20px var(--xbox-glow);
+      animation: blinkGlow 1s ease-in-out infinite;
+    }
+    @keyframes blinkGlow {
+      0%,100% { opacity:1; }
+      50%      { opacity:0.5; }
+    }
+
+    /* ══════════════════════════════
+       COUNTDOWN
+    ══════════════════════════════ */
+    .countdown-section {
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+
+    .section-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--xbox-hi);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    /* icona orologio CSS */
+    .icon-clock {
+      width: 14px; height: 14px;
+      border: 2px solid var(--xbox-hi);
+      border-radius: 50%;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .icon-clock::before {
+      content: '';
+      position: absolute;
+      top: 1px; left: 5px;
+      width: 2px; height: 4px;
+      background: var(--xbox-hi);
+      border-radius: 1px;
+    }
+    .icon-clock::after {
+      content: '';
+      position: absolute;
+      top: 4px; left: 5px;
+      width: 3px; height: 2px;
+      background: var(--xbox-hi);
+      border-radius: 1px;
+      transform-origin: left center;
+      transform: rotate(-30deg);
+    }
+
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .cd-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.2rem 1.5rem;
+      min-width: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cd-box::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 2px;
+      background: var(--xbox-hi);
+      box-shadow: 0 0 8px var(--xbox-glow);
+    }
+    .cd-num {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+    }
+    .cd-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    /* ══════════════════════════════
+       ICONE CSS (sostituzione emoji)
+    ══════════════════════════════ */
+    .icon-row {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2.5rem 0;
+    }
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      animation: iconBob 2.5s ease-in-out infinite;
+    }
+    .icon-item:nth-child(2) { animation-delay: 0.2s; }
+    .icon-item:nth-child(3) { animation-delay: 0.4s; }
+    .icon-item:nth-child(4) { animation-delay: 0.6s; }
+    .icon-item:nth-child(5) { animation-delay: 0.8s; }
+    @keyframes iconBob {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-6px); }
+    }
+    .icon-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Torta CSS */
+    .css-cake {
+      width: 36px; height: 32px;
+      position: relative;
+    }
+    .cake-body {
+      position: absolute;
+      bottom: 0; left: 4px;
+      width: 28px; height: 18px;
+      background: #c0392b;
+      border-radius: 3px 3px 4px 4px;
+    }
+    .cake-body::before {
+      content: '';
+      position: absolute;
+      top: -6px; left: 0;
+      width: 100%; height: 8px;
+      background: #e8d5b7;
+      border-radius: 3px 3px 0 0;
+    }
+    .cake-body::after {
+      content: '';
+      position: absolute;
+      top: 5px; left: 6px;
+      width: 16px; height: 2px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 2px;
+    }
+    .cake-candle {
+      position: absolute;
+      bottom: 18px; left: 50%;
+      transform: translateX(-50%);
+      width: 5px; height: 10px;
+      background: #f39c12;
+      border-radius: 2px;
+    }
+    .cake-flame {
+      position: absolute;
+      bottom: 100%; left: 50%;
+      transform: translateX(-50%);
+      width: 5px; height: 7px;
+      background: #fbbf24;
+      border-radius: 50% 50% 40% 40%;
+      animation: flicker 0.5s ease-in-out infinite alternate;
+      box-shadow: 0 0 6px #fbbf24;
+    }
+    @keyframes flicker {
+      from { transform: translateX(-50%) scaleX(1) scaleY(1); }
+      to   { transform: translateX(-50%) scaleX(0.8) scaleY(1.1); }
+    }
+
+    /* Palloncino CSS */
+    .css-balloon {
+      width: 30px; height: 36px;
+      position: relative;
+    }
+    .balloon-body {
+      width: 30px; height: 30px;
+      background: var(--xbox-hi);
+      border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+      position: relative;
+      box-shadow: inset -4px -4px 0 rgba(0,0,0,0.15);
+    }
+    .balloon-body::after {
+      content: '';
+      position: absolute;
+      bottom: -6px; left: 50%;
+      transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 7px solid var(--xbox-hi);
+    }
+    .balloon-string {
+      width: 1px; height: 8px;
+      background: var(--muted);
+      margin: 0 auto;
+      margin-top: 2px;
+    }
+
+    /* Controller CSS */
+    .css-controller {
+      width: 40px; height: 26px;
+      position: relative;
+    }
+    .ctrl-body {
+      width: 40px; height: 22px;
+      background: #222;
+      border: 2px solid #333;
+      border-radius: 10px 10px 14px 14px;
+      position: relative;
+    }
+    .ctrl-body::before {
+      content: '';
+      position: absolute;
+      top: 4px; left: 8px;
+      width: 8px; height: 8px;
+      background: #444;
+      border-radius: 50%;
+      box-shadow: 14px 0 0 #444;
+    }
+    .ctrl-xbox {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 10px; height: 10px;
+      background: var(--xbox);
+      border-radius: 50%;
+    }
+    .ctrl-bumper {
+      position: absolute;
+      top: -5px; left: 6px;
+      width: 28px; height: 5px;
+      background: #333;
+      border-radius: 4px 4px 0 0;
+    }
+
+    /* Regalo CSS */
+    .css-gift {
+      width: 34px; height: 32px;
+      position: relative;
+    }
+    .gift-box {
+      width: 34px; height: 20px;
+      background: #9b59b6;
+      border-radius: 3px;
+      position: absolute;
+      bottom: 0;
+    }
+    .gift-lid {
+      width: 34px; height: 9px;
+      background: #8e44ad;
+      border-radius: 3px;
+      position: absolute;
+      bottom: 18px;
+    }
+    .gift-ribbon-v {
+      width: 4px; height: 30px;
+      background: var(--yellow);
+      position: absolute;
+      bottom: 0; left: 15px;
+      z-index: 1;
+    }
+    .gift-ribbon-h {
+      width: 34px; height: 4px;
+      background: var(--yellow);
+      position: absolute;
+      bottom: 17px; left: 0;
+      z-index: 1;
+    }
+    .gift-bow {
+      position: absolute;
+      bottom: 28px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+    .gift-bow::before,
+    .gift-bow::after {
+      content: '';
+      position: absolute;
+      width: 10px; height: 7px;
+      background: var(--yellow);
+      border-radius: 50%;
+      top: 0;
+    }
+    .gift-bow::before { left: -10px; transform: rotate(-30deg); }
+    .gift-bow::after  { left: 2px;   transform: rotate(30deg); }
+
+    /* Stella CSS */
+    .css-star {
+      width: 32px; height: 32px;
+      background: var(--yellow);
+      clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+      box-shadow: 0 0 10px rgba(255,215,0,0.7);
+    }
+
+    /* ══════════════════════════════
+       MESSAGGIO
+    ══════════════════════════════ */
+    .message-section {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 1rem 2rem 5rem;
+    }
+
+    .msg-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    /* icona lettera CSS */
+    .icon-envelope {
+      width: 18px; height: 14px;
+      border: 2px solid var(--xbox-hi);
+      border-radius: 2px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .icon-envelope::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, transparent 45%, var(--xbox-hi) 45%, var(--xbox-hi) 55%, transparent 55%),
+                  linear-gradient(225deg, transparent 45%, var(--xbox-hi) 45%, var(--xbox-hi) 55%, transparent 55%);
+    }
+
+    .message-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .message-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--xbox-hi);
+      box-shadow: 0 0 12px var(--xbox-glow);
+    }
+
+    .message-text {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: rgba(240,240,240,0.85);
+      font-weight: 400;
+    }
+
+    .message-sign {
+      margin-top: 2rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      color: var(--xbox-hi);
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    /* cuore CSS */
+    .css-heart {
+      width: 12px; height: 11px;
+      background: #e74c3c;
+      clip-path: polygon(50% 100%, 5% 40%, 20% 10%, 50% 30%, 80% 10%, 95% 40%);
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════
+       PROGRESS BAR (stile XP)
+    ══════════════════════════════ */
+    .xp-section {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+    .xp-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .xp-bar {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .xp-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--xbox), var(--xbox-hi));
+      border-radius: 3px;
+      box-shadow: 0 0 8px var(--xbox-glow);
+      transition: width 2s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: #333;
+      font-family: 'Orbitron', monospace;
+    }
+
+    @media (max-width: 480px) {
+      .cd-box { padding: 0.9rem 1rem; min-width: 65px; }
+      .cd-num { font-size: 2rem; }
+      .message-card { padding: 1.5rem; }
+      .achievement { padding: 0.8rem 1rem; }
+    }
+
+    /* ══════════════════════════════
+       LOCK SCREEN
+    ══════════════════════════════ */
+    #lock-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      text-align: center;
+      padding: 2rem;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    #lock-screen.hide {
+      opacity: 0;
+      transform: scale(1.04);
+      pointer-events: none;
+    }
+
+    .lock-logo {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--xbox);
+      box-shadow: 0 0 40px var(--xbox-glow), 0 0 80px rgba(16,124,16,0.3);
+      display: flex; align-items: center; justify-content: center;
+      animation: logoPulse 3s ease-in-out infinite;
+    }
+    .lock-x {
+      width: 34px; height: 34px;
+      position: relative;
+    }
+    .lock-x::before, .lock-x::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 0;
+      width: 100%; height: 5px;
+      background: white;
+      border-radius: 3px;
+      transform-origin: center;
+    }
+    .lock-x::before { transform: translateY(-50%) rotate(45deg); }
+    .lock-x::after  { transform: translateY(-50%) rotate(-45deg); }
+
+    .lock-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.9rem, 3vw, 1.2rem);
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .lock-title span { color: var(--xbox-hi); }
+
+    .lock-countdown {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .lock-cd-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.2rem 1.5rem;
+      min-width: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .lock-cd-box::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 2px;
+      background: var(--xbox-hi);
+      box-shadow: 0 0 8px var(--xbox-glow);
+    }
+    .lock-cd-num {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+    }
+    .lock-cd-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+
+    .lock-hint {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #2a2a2a;
+      font-family: 'Orbitron', monospace;
+      animation: hintBlink 2s ease-in-out infinite;
+    }
+    @keyframes hintBlink {
+      0%,100% { color: #2a2a2a; }
+      50%      { color: #444; }
+    }
+
+    /* ── REVEAL FLASH ── */
+    #reveal-flash {
+      position: fixed;
+      inset: 0;
+      background: var(--xbox-hi);
+      z-index: 8999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+    }
+    #reveal-flash.flash {
+      opacity: 1;
+    }
+
+    /* il content parte invisibile */
+    .content {
+      opacity: 0;
+      transition: opacity 0.8s ease 0.3s;
+    }
+    .content.revealed {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+<canvas id="confetti-canvas"></canvas>
+<div id="reveal-flash"></div>
+
+<!-- ── LOCK SCREEN ── -->
+<div id="lock-screen">
+  <div class="lock-logo"><div class="lock-x"></div></div>
+  <div class="lock-title">Sblocco in corso per<br><span>Raffaele</span></div>
+  <div class="lock-countdown">
+    <div class="lock-cd-box"><div class="lock-cd-num" id="lcd-g">--</div><div class="lock-cd-label">Giorni</div></div>
+    <div class="lock-cd-box"><div class="lock-cd-num" id="lcd-h">--</div><div class="lock-cd-label">Ore</div></div>
+    <div class="lock-cd-box"><div class="lock-cd-num" id="lcd-m">--</div><div class="lock-cd-label">Minuti</div></div>
+    <div class="lock-cd-box"><div class="lock-cd-num" id="lcd-s">--</div><div class="lock-cd-label">Secondi</div></div>
+  </div>
+  <div class="lock-hint">// contenuto bloccato fino al 27 giugno 2026 //</div>
+</div>
+
+<div class="content">
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+
+    <div class="xbox-logo">
+      <div class="xbox-x"></div>
+    </div>
+
+    <!-- ACHIEVEMENT CARD -->
+    <div class="achievement">
+      <div class="ach-icon"><div class="ach-star"></div></div>
+      <div class="ach-text">
+        <div class="ach-top">Achievement sbloccato</div>
+        <div class="ach-title">Diciotto Anni Compiuti</div>
+        <div class="ach-desc">Missione completata con successo</div>
+      </div>
+      <div class="ach-pts">180G</div>
+    </div>
+
+    <div class="big-number"><span>18</span></div>
+
+    <h1 class="hero-title">AUGURI <span class="hero-name">RAFFAELE</span></h1>
+    <p class="hero-sub">Hai raggiunto il livello massimo. Nuovo gioco sta per iniziare.</p>
+    <div class="its-today" id="oggi-msg">// OGGI E' IL GRANDE GIORNO //</div>
+  </section>
+
+  <!-- ── COUNTDOWN ── -->
+  <section class="countdown-section">
+    <p class="section-label">
+      <span class="icon-clock"></span>
+      Tempo rimanente al compleanno
+    </p>
+    <div class="countdown-grid">
+      <div class="cd-box"><div class="cd-num" id="cd-g">--</div><div class="cd-label">Giorni</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-h">--</div><div class="cd-label">Ore</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-m">--</div><div class="cd-label">Minuti</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-s">--</div><div class="cd-label">Secondi</div></div>
+    </div>
+  </section>
+
+  <!-- ── ICONE CSS ── -->
+  <div class="icon-row">
+    <!-- Torta -->
+    <div class="icon-item">
+      <div class="css-cake">
+        <div class="cake-candle"><div class="cake-flame"></div></div>
+        <div class="cake-body"></div>
+      </div>
+      <span class="icon-label">Torta</span>
+    </div>
+    <!-- Palloncino -->
+    <div class="icon-item">
+      <div class="css-balloon">
+        <div class="balloon-body"></div>
+        <div class="balloon-string"></div>
+      </div>
+      <span class="icon-label">Festa</span>
+    </div>
+    <!-- Controller -->
+    <div class="icon-item">
+      <div class="css-controller">
+        <div class="ctrl-bumper"></div>
+        <div class="ctrl-body">
+          <div class="ctrl-xbox"></div>
+        </div>
+      </div>
+      <span class="icon-label">Player 1</span>
+    </div>
+    <!-- Regalo -->
+    <div class="icon-item">
+      <div class="css-gift">
+        <div class="gift-bow"></div>
+        <div class="gift-ribbon-v"></div>
+        <div class="gift-ribbon-h"></div>
+        <div class="gift-lid"></div>
+        <div class="gift-box"></div>
+      </div>
+      <span class="icon-label">Regalo</span>
+    </div>
+    <!-- Stella -->
+    <div class="icon-item">
+      <div class="css-star"></div>
+      <span class="icon-label">Leggenda</span>
+    </div>
+  </div>
+
+  <!-- ── MESSAGGIO ── -->
+  <section class="message-section">
+    <div class="msg-header">
+      <span class="section-label">
+        <span class="icon-envelope"></span>
+        Messaggio personale
+      </span>
+    </div>
+    <div class="message-card">
+      <p class="message-text">
+        Raff, oggi fai 18 anni.<br><br>
+        Sembra assurdo dirlo, perché ho ancora in testa tutte le volte in cui ridevamo senza motivo, le giornate passate insieme, le cazzate fatte, le notti a parlare di tutto e di niente fino alle 4 del mattino.<br><br>
+        In tutti questi anni sei diventato molto più di un semplice amico: sei tutto ciò che ho sempre voluto desiderare di poter dire di avere al mio fianco.<br><br>
+        E proprio per questo mi pesa da morire non poter essere lì con te oggi.<br><br>
+        Mi dispiace davvero tanto non esserci, soprattutto in un giorno così importante della tua vita. Avrei voluto esserci per abbracciarti, festeggiare con te, ridere insieme come abbiamo sempre fatto e creare uno di quei ricordi che ci saremmo portati dietro per sempre.<br><br>
+        Però voglio che tu sappia una cosa: anche se oggi non sarò lì fisicamente, col cuore ci sono eccome.<br>
+        E non c'è distanza che possa cambiare il bene che ti voglio.<br><br>
+        Hai sempre avuto un posto speciale nella mia vita.<br>
+        Sei una di quelle persone rare che riescono a lasciare qualcosa dentro agli altri semplicemente essendo sé stesse.<br>
+        E io sono davvero grato di averti accanto da tutti questi anni.<br><br>
+        Ti auguro di vivere questi 18 anni come meritano di essere vissuti: con felicità vera, con persone che ti amano davvero e con mille sogni che piano piano diventano realtà.<br>
+        Perché tu meriti tutto il bello che la vita può dare.<br><br>
+        Buon 18°, fratello mio.<br>
+        Ti voglio bene davvero, più di quanto riescano a spiegarlo le parole.
+      </p>
+      <div class="message-sign">
+        <div class="css-heart"></div>
+        Con tutto il bene del mondo ❤️
+      </div>
+    </div>
+  </section>
+
+  <!-- ── XP BAR ── -->
+  <section class="xp-section">
+    <div class="xp-label">
+      <span>Esperienza di vita guadagnata</span>
+      <span id="xp-val">0 / 18 anni</span>
+    </div>
+    <div class="xp-bar">
+      <div class="xp-fill" id="xp-fill"></div>
+    </div>
+  </section>
+
+  <footer>// RAFFAELE — ANNO 18 — LIVELLO SBLOCCATO //</footer>
+</div>
+
+<script>
+  // ── COUNTDOWN + LOCK/REVEAL ──
+  const target = new Date('2026-06-27T00:00:00');
+  let revealed = false;
+
+  function pad(n) { return String(n).padStart(2,'0'); }
+
+  function reveal() {
+    if (revealed) return;
+    revealed = true;
+
+    // flash verde
+    const flash = document.getElementById('reveal-flash');
+    flash.classList.add('flash');
+    setTimeout(() => { flash.classList.remove('flash'); }, 300);
+
+    // nascondi lock screen
+    const lock = document.getElementById('lock-screen');
+    lock.classList.add('hide');
+    setTimeout(() => { lock.style.display = 'none'; }, 900);
+
+    // mostra content
+    setTimeout(() => {
+      document.querySelector('.content').classList.add('revealed');
+    }, 200);
+
+    // coriandoli di apertura
+    setTimeout(() => { launchConfetti(300); }, 500);
+
+    // oggi msg
+    document.getElementById('oggi-msg').style.display = 'block';
+
+    // avvia XP bar
+    setTimeout(() => {
+      const fill = document.getElementById('xp-fill');
+      const val  = document.getElementById('xp-val');
+      fill.style.width = '100%';
+      let n = 0;
+      const iv = setInterval(() => {
+        n = Math.min(n + 0.3, 18);
+        val.textContent = n.toFixed(1) + ' / 18 anni';
+        if (n >= 18) { val.textContent = '18 / 18 anni'; clearInterval(iv); }
+      }, 35);
+    }, 1200);
+  }
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      // aggiorna display countdown nella pagina principale
+      ['cd-g','cd-h','cd-m','cd-s'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = '00';
+      });
+      reveal();
+      return;
+    }
+
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+
+    // lock screen
+    document.getElementById('lcd-g').textContent = pad(d);
+    document.getElementById('lcd-h').textContent = pad(h);
+    document.getElementById('lcd-m').textContent = pad(m);
+    document.getElementById('lcd-s').textContent = pad(s);
+
+    // pagina principale (sincronizzata)
+    const cdg = document.getElementById('cd-g');
+    if (cdg) {
+      document.getElementById('cd-g').textContent = pad(d);
+      document.getElementById('cd-h').textContent = pad(h);
+      document.getElementById('cd-m').textContent = pad(m);
+      document.getElementById('cd-s').textContent = pad(s);
+    }
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ── CORIANDOLI ──
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // colori Xbox + oro
+  const colors = ['#107c10','#52b043','#ffffff','#ffd700','#9b59b6','#22d3ee'];
+  let particles = [];
+
+  function launchConfetti(n = 80) {
+    for (let i = 0; i < n; i++) {
+      particles.push({
+        x: Math.random() * canvas.width, y: -10,
+        r: 4 + Math.random() * 5,
+        color: colors[Math.floor(Math.random()*colors.length)],
+        vx: (Math.random()-.5)*4, vy: 2 + Math.random()*3,
+        rot: Math.random()*360, rotV: (Math.random()-.5)*5,
+        shape: Math.random()>.5?'rect':'circle', life: 1
+      });
+    }
+  }
+  function animateConfetti() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles = particles.filter(p => p.life > 0.01);
+    particles.forEach(p => {
+      ctx.save();
+      ctx.translate(p.x,p.y);
+      ctx.rotate(p.rot*Math.PI/180);
+      ctx.globalAlpha = p.life;
+      ctx.fillStyle = p.color;
+      if(p.shape==='rect') ctx.fillRect(-p.r,-p.r/2,p.r*2,p.r);
+      else { ctx.beginPath(); ctx.arc(0,0,p.r/2,0,Math.PI*2); ctx.fill(); }
+      ctx.restore();
+      p.x+=p.vx; p.y+=p.vy; p.rot+=p.rotV; p.vy+=0.06;
+      if(p.y > canvas.height+20) p.life=0;
+    });
+    requestAnimationFrame(animateConfetti);
+  }
+  animateConfetti();
+  launchConfetti(50);
+  setInterval(()=>launchConfetti(20), 5000);
+
+  document.addEventListener('click', e => {
+    for(let i=0;i<25;i++) particles.push({
+      x:e.clientX, y:e.clientY,
+      r:3+Math.random()*5,
+      color:colors[Math.floor(Math.random()*colors.length)],
+      vx:(Math.random()-.5)*9, vy:-3-Math.random()*5,
+      rot:Math.random()*360, rotV:(Math.random()-.5)*8,
+      shape:Math.random()>.5?'rect':'circle', life:1
+    });
+  });
+</script>
+</body>
+</html>
